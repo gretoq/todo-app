@@ -1,44 +1,54 @@
-# React Todo App with API (complete)
+# To-Do App
+A single-page application that allows users to create and manage a list of tasks.
 
-It is the third part of the React Todo App with API.
+# [Demo](https://anastasiia-tilikina.github.io/todo-app/)
 
-Take your code implemented for [Add and Delete](https://github.com/mate-academy/react_todo-app-add-and-delete)
-and implement the ability to toggle and rename todos.
+# Technologies used
+- React.js
+- React Router(v6)
+- React TRANSITION GROUP
+- TypeScript
+- JavaScript
+- Fetch, REST API
+- Sass (SCSS)
+- Bulma
+- FontAwesome
 
-> Here is [the working example](https://mate-academy.github.io/react_todo-app-with-api/)
+# Structure
+App is built using functional components and React Hooks.
+Each component is abstract and fully reusable.
+CSS frameworks Bulma and FontAwesome are used to style the app along with custom SCSS.
 
-## Toggling a todo status
+# Features & Functionality
 
-Toggle the `completed` status on `TodoStatus` change:
+## ToDos
+- ToDos are stored in the server and fetched on login
+- User can create a new todo
+- User can delete a todo
+- User can edit a todo
+- User can mark a todo as completed
+- User can mark all ToDos as completed
+- User can delete all completed ToDos
+- All changes are saved in the server
+- `Wait` function was used to simulate server requests to demonstrate the loader.
+- User can filter ToDos by all, active and completed. Filter is saved in URL
+- User can see the number of active ToDos
+- In case of server error, user is notified
 
-- covered the todo with a loader overlay while wating for API response;
-- the status should be changed on success;
-- show the `Unable to update a todo` notification in case of API error.
+# How to run project locally
+- Fork and clone this repository
+- Run `npm install` to install all dependencies
+- Run `npm start` to start the app
+- Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Add the ability to toggle the completed status of all the todos with the `toggleAll` checkbox:
+# Dependencies
+- Node.version: `v14.18.2` or higher
+- NPM.version: `6.14.0` or higher
 
-- `toggleAll` button should have `active` class only if all the todos are completed;
-- `toggleAll` click changes its status to the oppsite one, and set it to all the todos;
-- it should work the same as several individual updates of the todos which statuses were actually changed;
-- do send requests for the todos that were not changed;
+# Reflections
+One of the main goals of this project was to learn how to build a single-page application using React.
+Another challenge was to learn and understand how to work with REST API, different fetch requests such as GET, POST, PATCH and DELETE and errors handling.
 
-## Renaming a todo
+Additionally, usage of React Transition Group gave me an understanding how to animate the appearance and disappearance of React components.
 
-Implement the ability to edit a todo title on double click:
-
-- show the edit form instead of the title and remove button;
-- saves changes on the form submit (just press `Enter`);
-- save changes when the field loses focus (`onBlur`);
-- if new title is the same as the old one just cancel editing;
-- cancel editing on `Esс` key `keyup` event;
-- if the new title is empty delete the todo the same way the `x` button does it;
-- if the title was changed show the loader while waiting for the API response;
-- update the todo title on success;
-- show `Unable to update a todo` in case of API error;
-- or the deletion error message if we tried to delete the todo.
-
-## Instructions
-
-- Implement a solution following the [React task guideline](https://github.com/mate-academy/react_task-guideline#react-tasks-guideline).
-- Use the [React TypeScript cheat sheet](https://mate-academy.github.io/fe-program/js/extra/react-typescript).
-- Replace `<your_account>` with your Github username in the [DEMO LINK](https://<your_account>.github.io/react_todo-app-with-api/) and add it to the PR description.
+### Inspired by [TodoMVC](https://todomvc.com/examples/vanillajs/)
