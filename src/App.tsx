@@ -40,7 +40,7 @@ export const App: React.FC = () => {
 
     setTimeout(() => {
       setIsHiddenError(true);
-      // setErrorType(ErrorsType.NONE);
+      setErrorType(ErrorsType.NONE);
     }, 3000);
   }, []);
 
