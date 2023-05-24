@@ -5,7 +5,6 @@ import React, {
   useState,
 } from 'react';
 
-import classNames from 'classnames';
 import {
   addTodo,
   changeTodo,
@@ -23,6 +22,7 @@ import { UserWarning } from './UserWarning';
 import { HeaderTodo } from './components/HeaderTodo';
 import { TodoList } from './components/TodoList';
 import { TodoFooter } from './components/TodoFooter';
+import { ErrorNotification } from './components/ErrorNotification';
 
 const USER_ID = 7036;
 
@@ -30,18 +30,21 @@ export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [tempTodo, setTempTodo] = useState<Todo | null>(null);
   const [filterType, setSortType] = useState<FilterType>(FilterType.ALL);
-  const [errorType, setErrorType] = useState<ErrorsType>(ErrorsType.EMPTY);
+  const [errorType, setErrorType] = useState<ErrorsType>(ErrorsType.NONE);
   const [isHiddenError, setIsHiddenError] = useState(true);
   const [loadingTodosIds, setLoadingTodosIds] = useState<number[]>([]);
 
-  const handleError = useCallback((typeOfError: ErrorsType) => {
+  const handleError = useCallback(async (typeOfError: ErrorsType) => {
     setErrorType(typeOfError);
     setIsHiddenError(false);
 
-    setTimeout(() => {
-      setIsHiddenError(true);
-      setErrorType(ErrorsType.NONE);
-    }, 3000);
+    await new Promise(() => {
+      setTimeout(() => {
+        setIsHiddenError(true);
+      }, 3000);
+    });
+
+    setErrorType(ErrorsType.NONE);
   }, []);
 
   useEffect(() => {
@@ -149,11 +152,11 @@ export const App: React.FC = () => {
         id,
       ]));
 
-      await changeTodo(id, { completed: !completed });
+      const changedTodo = await changeTodo(id, { completed: !completed });
 
       setTodos(prevTodos => prevTodos.map(todo => {
         if (todo.id === id) {
-          return { ...todo, completed: !completed };
+          return changedTodo;
         }
 
         return todo;
@@ -196,11 +199,11 @@ export const App: React.FC = () => {
         todoId,
       ]));
 
-      await changeTodo(todoId, { title });
+      const changedTodo = await changeTodo(todoId, { title });
 
       setTodos(prevTodos => prevTodos.map(todo => {
         if (todo.id === todoId) {
-          return { ...todo, title: newTitle };
+          return changedTodo;
         }
 
         return todo;
@@ -240,7 +243,7 @@ export const App: React.FC = () => {
           onChangeTitle={handlerChangeTitle}
         />
 
-        {todos[0] && (
+        {todos.length > 0 && (
           <TodoFooter
             todos={onlyUncompletedTodos}
             filterType={filterType}
@@ -251,26 +254,11 @@ export const App: React.FC = () => {
         )}
       </div>
 
-      <div
-        className={classNames(
-          'notification',
-          'is-danger',
-          'is-light',
-          'has-text-weight-normal',
-          {
-            hidden: isHiddenError,
-          },
-        )}
-      >
-        <button
-          type="button"
-          className="delete"
-          onClick={handleCloseError}
-          aria-label="delete error message"
-        />
-
-        {errorType}
-      </div>
+      <ErrorNotification
+        errorType={errorType}
+        isHidden={isHiddenError}
+        onClose={handleCloseError}
+      />
     </div>
   );
 };
