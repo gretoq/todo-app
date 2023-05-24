@@ -1,7 +1,7 @@
 # To-Do App
 A single-page application that allows users to create and manage a list of tasks.
 
-# [Demo](https://anastasiia-tilikina.github.io/todo-app/)
+# [Demo](https://gretoq.github.io/todo-app/)
 
 # Technologies used
 - React.js
